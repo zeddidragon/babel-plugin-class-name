@@ -1,19 +1,19 @@
 module.exports = function(babel) {
-  var addClassName = function(node) {
+  var t = babel.types
+  var addClassName = function(path) {
+    var node = path.node 
     if(node.id != null) {
-      node.body.body.unshift({
-        type: "ClassProperty",
-        key: {
-          name: "className",
-          type: "Identifier"
-        },
-        value: {
-          value: node.id.name,
-          type: "Literal"
-        },
-        static: true,
-        computed: false
-      });
+      console.log(node.body)
+      node.body.body.unshift(t.classMethod(
+        'get',
+        t.identifier("className"),
+        [],
+        t.blockStatement([
+          t.returnStatement(t.stringLiteral(node.id.name))
+        ]),
+        false,
+        true
+      ))
     }
   };
   return {
