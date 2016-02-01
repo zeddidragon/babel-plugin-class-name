@@ -3,7 +3,6 @@ module.exports = function(babel) {
   var addClassName = function(path) {
     var node = path.node 
     if(node.id != null) {
-      console.log(node.body)
       node.body.body.unshift(t.classMethod(
         'get',
         t.identifier("className"),
